@@ -1,0 +1,74 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "ros2_fastdds_playground",
+	"dockerFile": "Dockerfile",
+	// Mount host workspace to this container path
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspace/ros2_fastdds_playground,type=bind",
+	"workspaceFolder": "/workspace/ros2_fastdds_playground",
+	"build": {
+	  "args": {
+		"WORKSPACE": "/workspace/ros2_fastdds_playground",
+		"VARIANT": "bullseye",
+		"BUILDKIT_INLINE_CACHE": "0"
+	  }
+	},
+	// This will launch the container as a non-root user.
+	"remoteUser": "ros",
+	"runArgs": [
+	  "--name=ros2_fastdds_playground_devcontainer",
+	  "--network=host",
+	  "--cap-add=SYS_PTRACE",
+	  "--security-opt=seccomp:unconfined",
+	  "--security-opt=apparmor:unconfined",
+	  "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+	  "--volume=/dev:/dev",
+	  "--volume=/tmp:/tmp",
+	  "--volume=${localEnv:HOME}/.aws:/home/ros/.aws",
+	  "--gpus=all"
+	],
+	"containerEnv": {
+	  "DISPLAY": "${localEnv:DISPLAY}",
+	  "ROS_HOSTNAME": "${localEnv:ROS_HOSTNAME}", 
+	  "ROS_DOMAIN_ID": "${localEnv:ROS_DOMAIN_ID:0}", // use host ROS_DOMAIN_ID env var if set
+	  "QT_X11_NO_MITSHM": "1",
+	  "RMW_IMPLEMENTATION": "rmw_fastrtps_cpp",
+	},
+	// See https://code.visualstudio.com/remote/advancedcontainers/start-processes
+	// Set *default* container specific settings.json values on container create.
+	"customizations": {
+	  "vscode": {
+		"settings": {
+		  "terminal.integrated.profiles.linux": {
+			"bash": {
+			  "path": "bash"
+			}
+		  },
+		  "terminal.integrated.defaultProfile.linux": "bash"
+		},
+		"extensions": [
+		  "bierner.markdown-mermaid",
+		  "cmake-ms-vscode.cmake-tools",
+		  "dotjoshjohnson.xml",
+		  "eamodio.gitlens",
+		  "github.copilot",
+		  "ms-azuretools.vscode-docker",
+		  "ms-vscode.cpptools",
+		  "ms-vscode.cpptools-extension-pack",
+		  "ms-vscode.makefile-tools",
+		  "ms-python.python",
+		  "redhat.vscode-yaml",
+		  "smilerobotics.urdf",
+		  "streetsidesoftware.code-spell-checker",
+		  "twxs.cmake",
+		  "yzhang.markdown-all-in-one",
+		  "zachflower.uncrustify",
+		  "mhutchie.git-graph",
+		  "ms-iot.vscode-ros",
+		  "tatsy.vscode-3d-preview",
+		  "Percy.vscode-numpy-viewer",
+		  "cesium.gltf-vscode"
+	  ]
+	  }
+	}
+  }
+  
