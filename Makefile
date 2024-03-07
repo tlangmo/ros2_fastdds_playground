@@ -40,11 +40,11 @@ publish-all: build ## Run all nodes
 topic-list: build ## List all topics visible
 	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 topic list"
 
-topic-hz-heavy: build ## List all topics visible
+topic-hz-heavy: build ## Output topic hz 
 	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 topic hz /heavy/image1000"
 
-topic-hz-qos: build ## List all topics visible
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 topic hz /qos/transient_local_d3"
+topic-echo-qos: build ## Echo messages of transient_local_d3 topic
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 topic echo /qos/transient_local_d3"
 
 service-list: build ## List all topics visible
 	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 service list"
