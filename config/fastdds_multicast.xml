@@ -11,9 +11,6 @@
                     <address>192.168.1.141</address>
                     <address>192.168.1.200</address>
                  </interfaceWhiteList>
-                 <listening_ports>
-                      <port>0</port>
-                 </listening_ports>
                  <non_blocking_send>true</non_blocking_send>
             </transport_descriptor>
         </transport_descriptors>
@@ -44,8 +41,8 @@
             <multicastLocatorList>
                     <locator>
                         <udpv4>
-                            <address>239.255.0.40</address>
-                            <port>7901</port>
+                            <address>239.255.0.141</address>
+                            <port>7900</port>
                         </udpv4>
                     </locator>
             </multicastLocatorList>
@@ -60,17 +57,17 @@
             <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
         </publisher>
 
-        <subscriber profile_name="/heavy/image1000">
+        <!-- <subscriber profile_name="/heavy/image1000">
             <multicastLocatorList>
                     <locator>
                         <udpv4>
-                            <address>239.255.0.40</address>
-                            <port>7901</port>
+                            <address>239.255.0.141</address>
+                            <port>7900</port>
                         </udpv4>
                     </locator>
             </multicastLocatorList>
             <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
-        </subscriber>
+        </subscriber> -->
 
 
         <subscriber profile_name="default subscriber profile" is_default_profile="true">

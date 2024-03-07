@@ -22,41 +22,38 @@ ROS2_IMAGE ?= ros2_environment
 build: ## Build the main docker image
 	docker build -f docker/ros2_environment.dockerfile -t ${ROS2_IMAGE} .
 
-FASTRTPS_DEFAULT_PROFILES_FILE ?= fastdds_udp.xml
+XML ?= fastdds_udp.xml
 # These commands are for the host container to run different test scenarios
 
 configs: build ## List all available fastdds config files
-	docker run --entrypoint= --network=host --ipc=host -t ${ROS2_IMAGE} /bin/bash -c "echo 'FASTRTPS_DEFAULT_PROFILES_FILE=<file>' ; ls -al /workspace/config | grep xml | rev | cut -d' ' -f1 | rev "
+	docker run --entrypoint= --network=host --ipc=host -t ${ROS2_IMAGE} /bin/bash -c "echo 'XML=<file>' ; ls -al /workspace/config | grep xml | rev | cut -d' ' -f1 | rev "
 
 publish-heavy: build ## Publish large topics at 10fps
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${FASTRTPS_DEFAULT_PROFILES_FILE} -t ${ROS2_IMAGE} "ros2 launch --noninteractive scenarios_py heavy_pub.launch.py fps:=10"
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE} "ros2 launch --noninteractive scenarios_py heavy_pub.launch.py fps:=10"
 
 publish-qos: build ## Publish light topics every 10 seconds (to test QoS behavior)
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${FASTRTPS_DEFAULT_PROFILES_FILE}  -t ${ROS2_IMAGE} "ros2 launch --noninteractive scenarios_py qos_pub.launch.py period_sec:=10"
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML}  -t ${ROS2_IMAGE} "ros2 launch --noninteractive scenarios_py qos_pub.launch.py period_sec:=10"
 
 publish-all: build ## Run all nodes
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${FASTRTPS_DEFAULT_PROFILES_FILE}  -t ${ROS2_IMAGE} "ros2 launch --noninteractive scenarios_py all.launch.py"
-
-publish-all-shm:  ## Run all nodes with shared memory transport support
-	$(MAKE) publish-all FASTRTPS_DEFAULT_PROFILES_FILE=fastdds_shm.xml
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML}  -t ${ROS2_IMAGE} "ros2 launch --noninteractive scenarios_py all.launch.py"
 
 topic-list: build ## List all topics visible
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${FASTRTPS_DEFAULT_PROFILES_FILE} -t ${ROS2_IMAGE}  "ros2 topic list"
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 topic list"
+
+topic-hz-heavy: build ## List all topics visible
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 topic hz /heavy/image1000"
+
+topic-hz-qos: build ## List all topics visible
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 topic hz /qos/transient_local_d3"
 
 service-list: build ## List all topics visible
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${FASTRTPS_DEFAULT_PROFILES_FILE} -t ${ROS2_IMAGE}  "ros2 service list"
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE}  "ros2 service list"
 
 rviz: build ## Rviz display
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${FASTRTPS_DEFAULT_PROFILES_FILE} -e DISPLAY=$(DISPLAY) -v "/tmp/.X11-unix:/tmp/.X11-unix" -t ${ROS2_IMAGE} "ros2 run rviz2 rviz2 -d config/default.rviz"
-
-rviz-shm: ## Rviz display with shared memory transport support
-	$(MAKE) rviz FASTRTPS_DEFAULT_PROFILES_FILE=fastdds_shm.xml
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -e DISPLAY=$(DISPLAY) -v "/tmp/.X11-unix:/tmp/.X11-unix" -t ${ROS2_IMAGE} "ros2 run rviz2 rviz2 -d config/default.rviz"
 
 call-service: ## Call a service
-	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${FASTRTPS_DEFAULT_PROFILES_FILE} -t ${ROS2_IMAGE} "ros2 service call  /service_node/reentrant/run_fake_task playground_interfaces/srv/RunFakeTask '{duration_sec: 1}'"
-
-call-service-shm: ## Call a service
-	$(MAKE) call-service FASTRTPS_DEFAULT_PROFILES_FILE=fastdds_shm.xml
+	docker run --network=host --ipc=host  -e FASTRTPS_DEFAULT_PROFILES_FILE=/workspace/config/${XML} -t ${ROS2_IMAGE} "ros2 service call  /service_node/reentrant/run_fake_task playground_interfaces/srv/RunFakeTask '{duration_sec: 1}'"
 
 tshark-rtps: ## Run a tshark command to capture rtps traffic
 	sudo tshark -i any -Y "rtps" -q -z io,stat,1,"rtps"
