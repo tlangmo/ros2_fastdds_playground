@@ -6,7 +6,7 @@
             <transport_descriptor>
                 <transport_id>udp_transport</transport_id>
                 <type>UDPv4</type>
-                <interfaceWhiteList>
+                 <interfaceWhiteList>
                     <address>192.168.1.141</address>
                     <address>192.168.1.151</address>
                     <address>192.168.1.200</address>
@@ -37,33 +37,36 @@
             <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
         </publisher>
 
-
-        <publisher profile_name="/heavy/image1000">
+      <publisher profile_name="/heavy/image1000">
+            <multicastLocatorList>
+                    <locator>
+                        <udpv4>
+                            <address>239.255.0.141</address>
+                            <port>7900</port>
+                        </udpv4>
+                    </locator>
+            </multicastLocatorList>
             <qos>
                 <publishMode>
                     <kind>ASYNCHRONOUS</kind>
                 </publishMode>
-                 <partition>
-                    <names>
-                        <name>perception</name>
-                    </names>
-                </partition>
+                <data_sharing>
+                    <kind>OFF</kind>
+                </data_sharing>
             </qos>
             <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
         </publisher>
 
-        <subscriber profile_name="/heavy/image1000">
-             <qos>
-                 <partition>
-                    <names>
-                        <name>perception</name>
-                    </names>
-                </partition>
-            </qos>
-            <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
-        </subscriber>
-
         <subscriber profile_name="default subscriber profile" is_default_profile="true">
+            <multicastLocatorList>
+                <locator>
+                    <udpv4>
+                        <address>239.255.0.141</address>
+                        <port>7900</port>
+                    </udpv4>
+                </locator>
+            </multicastLocatorList>
+            <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
             <qos>
                 <data_sharing>
                     <kind>OFF</kind>
@@ -71,5 +74,7 @@
             </qos>
             <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
         </subscriber>
+
+
     </profiles>
 </dds>

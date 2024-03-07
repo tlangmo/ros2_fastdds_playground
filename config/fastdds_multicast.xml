@@ -7,7 +7,6 @@
                 <transport_id>udp_transport</transport_id>
                 <type>UDPv4</type>
                  <interfaceWhiteList>
-					<address>127.0.0.1</address>
                     <address>192.168.1.141</address>
                     <address>192.168.1.151</address>
                     <address>192.168.1.200</address>
@@ -58,7 +57,7 @@
             <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
         </publisher>
 
-        <!-- <subscriber profile_name="/heavy/image1000">
+        <subscriber profile_name="/heavy/image1000">
             <multicastLocatorList>
                     <locator>
                         <udpv4>
@@ -68,7 +67,7 @@
                     </locator>
             </multicastLocatorList>
             <historyMemoryPolicy>PREALLOCATED_WITH_REALLOC</historyMemoryPolicy>
-        </subscriber> -->
+        </subscriber>
 
 
         <subscriber profile_name="default subscriber profile" is_default_profile="true">
