@@ -37,14 +37,14 @@ class HeavyPubNode(Node):
         now = perf_counter()
         self.publisher_.publish(ros_img)
         self.get_logger().info(
-            f'Publishing random noise image at {perf_counter()-now:.6f} seconds')
+            f'Publishing random noise image at {perf_counter()-now:.6f} seconds [THROTTLED]', throttle_duration_sec=1)
 
         msg = StaticFloat32ArrayLarge()
         msg.data = np.random.randn(100000).astype(np.float32)
         now = perf_counter()
         self.publisher_static_float.publish(msg)
         self.get_logger().info(
-            f'Publishing random static floats at {perf_counter()-now:.6f} seconds')
+            f'Publishing random static floats at {perf_counter()-now:.6f} seconds [THROTTLED]', throttle_duration_sec=1)
 
 
 def main(args=None):
