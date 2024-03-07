@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'heavy_subscribe_py'
+package_name = 'playground_publish_py'
 
 setup(
     name=package_name,
@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'heavy_pub_node = playground_publish_py.heavy_pub_node:main',
+            'qos_pub_node = playground_publish_py.qos_pub_node:main',
         ],
     },
 )

@@ -14,7 +14,6 @@ echo "if [ -f /opt/ros/${ROS_DISTRO}/setup.bash ]; then . /opt/ros/${ROS_DISTRO}
 >> ${user}/.bashrc; \
 echo "if [ -f ${WORKSPACE}/install/setup.bash ]; then . ${WORKSPACE}/install/setup.bash; fi" \
 >> ${user}/.bashrc; \
-# Add the aescape's sc alias.
 echo "alias sc='. ${WORKSPACE}/install/setup.bash'" >> ${user}/.bashrc; \
 echo ". /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ${user}/.bashrc; \
 done

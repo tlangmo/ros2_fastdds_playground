@@ -10,7 +10,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name + '/launch',
-         ['launch/one_pub_one_sub.launch.py']),
+         ['launch/heavy_pub.launch.py', 'launch/qos_pub.launch.py', 'launch/all.launch.py']),
         ('share/' + package_name, ['package.xml']),
     ],
     install_requires=['setuptools'],

@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'heavy_publish_py'
+package_name = 'playground_services_py'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'heavy_images = heavy_publish_py.heavy_images:main',
+            'service_node = playground_services_py.service_node:main',
         ],
     },
 )

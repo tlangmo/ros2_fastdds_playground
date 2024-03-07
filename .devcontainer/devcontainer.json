@@ -17,6 +17,7 @@
 	"runArgs": [
 	  "--name=ros2_fastdds_playground_devcontainer",
 	  "--network=host",
+	  "--ipc=host",
 	  "--cap-add=SYS_PTRACE",
 	  "--security-opt=seccomp:unconfined",
 	  "--security-opt=apparmor:unconfined",
@@ -29,9 +30,12 @@
 	"containerEnv": {
 	  "DISPLAY": "${localEnv:DISPLAY}",
 	  "ROS_HOSTNAME": "${localEnv:ROS_HOSTNAME}", 
-	  "ROS_DOMAIN_ID": "${localEnv:ROS_DOMAIN_ID:0}", // use host ROS_DOMAIN_ID env var if set
+	  "ROS_DOMAIN_ID": "111",
+	 // "ROS_DOMAIN_ID": "${localEnv:ROS_DOMAIN_ID:0}", // use host ROS_DOMAIN_ID env var if set
 	  "QT_X11_NO_MITSHM": "1",
 	  "RMW_IMPLEMENTATION": "rmw_fastrtps_cpp",
+	  "RMW_FASTRTPS_USE_QOS_FROM_XML": "1",
+	  "FASTRTPS_DEFAULT_PROFILES_FILE": "/workspace/ros2_fastdds_playground/config/fastdds_shm.xml"
 	},
 	// See https://code.visualstudio.com/remote/advancedcontainers/start-processes
 	// Set *default* container specific settings.json values on container create.

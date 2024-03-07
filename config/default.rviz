@@ -6,8 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /HeavyImage6401
-        - /HeavyImage6401/Topic1
+        - /HeavyImage10001
+        - /HeavyImage10001/Topic1
       Splitter Ratio: 0.5
     Tree Height: 625
   - Class: rviz_common/Selection
@@ -61,14 +61,14 @@ Visualization Manager:
       Max Value: 1
       Median window: 5
       Min Value: 0
-      Name: HeavyImage640
+      Name: HeavyImage1000
       Normalize Range: true
       Topic:
         Depth: 5
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /heavy/image640
+        Value: /heavy/image1000
       Value: true
   Enabled: true
   Global Options:
@@ -139,7 +139,7 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  HeavyImage640:
+  HeavyImage1000:
     collapsed: false
   Height: 1403
   Hide Left Dock: false
